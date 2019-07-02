@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentMigrator" Version="3.2.1" />
+    <PackageReference Include="FluentMigrator.Runner" Version="3.2.1" />
+    <PackageReference Include="FluentMigrator.Runner.SQLite" Version="3.2.1" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="2.2.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TestAionys.Models\TestAionys.Models.csproj" />
+  </ItemGroup>
+
+</Project>

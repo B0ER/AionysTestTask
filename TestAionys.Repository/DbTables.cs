@@ -2,7 +2,7 @@
 {
     public class DbTables
     {
-        public const string Clients = "";
-        public const string Visits = "";
+        public const string Clients = "Clients";
+        public const string Visits = "Visits";
     }
 }
