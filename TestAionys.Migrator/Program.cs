@@ -33,7 +33,7 @@ namespace TestAionys.Migrator
                     // Set the connection string
                     .WithGlobalConnectionString("Data Source=TestAionysDB.db")
                     // Define the assembly containing the migrations
-                    .ScanIn(typeof(InitMigration).Assembly)
+                    .ScanIn(typeof(AddSeedDataMigration).Assembly)
                     .For
                     .Migrations()
                 )

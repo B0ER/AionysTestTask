@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
+using Microsoft.Data.Sqlite;
 using TestAionys.Application.Data_Transfer_Objects;
 using TestAionys.Application.IRepositories;
 using TestAionys.Models.Database;
@@ -17,10 +17,11 @@ namespace TestAionys.Repository.Repositories
 
         public async Task<IEnumerable<VisitDto>> GetAll()
         {
-            using (Connection = new SqlConnection(ConnectionString))
+            using (Connection = new SqliteConnection(ConnectionString))
             {
                 IEnumerable<VisitDto> visitsDto = await Connection.QueryAsync<Visit, Client, VisitDto>(
-                    $"Select * from {TableName}",
+                    $"Select * from {TableName} " +
+                    $"inner join {DbTables.Clients} on {DbTables.Clients}.Id={TableName}.ClientId ",
                     (visit, client) =>
                     {
                         var visitDto = new VisitDto { Client = client, Visit = visit };
@@ -32,25 +33,24 @@ namespace TestAionys.Repository.Repositories
 
         public async Task<VisitDto> FindById(string id)
         {
-            using (Connection = new SqlConnection(ConnectionString))
+            using (Connection = new SqliteConnection(ConnectionString))
             {
-                using (Connection = new SqlConnection(ConnectionString))
-                {
-                    IEnumerable<VisitDto> visitsDto = await Connection.QueryAsync<Visit, Client, VisitDto>(
-                        $"Select top(1) * from {TableName} where Id=@id",
-                        (visit, client) =>
-                        {
-                            var visitDto = new VisitDto { Client = client, Visit = visit };
-                            return visitDto;
-                        }, new { id });
-                    return visitsDto.FirstOrDefault();
-                }
+                IEnumerable<VisitDto> visitsDto = await Connection.QueryAsync<Visit, Client, VisitDto>(
+                    $"Select top(1) * from {TableName} " +
+                    $"inner join {DbTables.Clients} on {DbTables.Clients}.Id={TableName}.ClientId " +
+                    $"where {TableName}.Id=@id",
+                    (visit, client) =>
+                    {
+                        var visitDto = new VisitDto { Client = client, Visit = visit };
+                        return visitDto;
+                    }, new { id });
+                return visitsDto.FirstOrDefault();
             }
         }
 
         public async Task Add(Visit addEntity)
         {
-            using (Connection = new SqlConnection(ConnectionString))
+            using (Connection = new SqliteConnection(ConnectionString))
             {
                 await Connection.ExecuteAsync(
                     $"Insert into {TableName} (Id, CreatedAt, ClientId, TaskName, Description, ClientAddress, StartTime, EndTime) " +
@@ -71,7 +71,7 @@ namespace TestAionys.Repository.Repositories
 
         public async Task Update(Visit updateEntity)
         {
-            using (Connection = new SqlConnection(ConnectionString))
+            using (Connection = new SqliteConnection(ConnectionString))
             {
                 await Connection.ExecuteAsync(
                     $"Update {TableName} " +
@@ -95,7 +95,7 @@ namespace TestAionys.Repository.Repositories
 
         public async Task DeleteById(string id)
         {
-            using (Connection = new SqlConnection(ConnectionString))
+            using (Connection = new SqliteConnection(ConnectionString))
             {
                 await Connection.ExecuteAsync($"DELETE FROM {TableName} where Id = @id", new { id });
             }
@@ -103,7 +103,7 @@ namespace TestAionys.Repository.Repositories
 
         public async Task Delete(Visit deletedEntity)
         {
-            using (Connection = new SqlConnection(ConnectionString))
+            using (Connection = new SqliteConnection(ConnectionString))
             {
                 await Connection.ExecuteAsync($"DELETE FROM {TableName} where Id = @Id", new { deletedEntity.Id });
             }

@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TestAionys.Repository.Configurations;
+using TestAionys.Repository.Dependency_Injection;
 
 namespace TestForAionys
 {
@@ -19,6 +21,9 @@ namespace TestForAionys
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<ConnectionConfig>(Configuration.GetSection("ConnectionConfig"));
+            services.AddRepository();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // In production, the React files will be served from this directory

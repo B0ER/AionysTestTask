@@ -1,6 +1,53 @@
-@media (max-width: 767px) {
-    /* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */
-    body {
-        padding-top: 50px;
-    }
+:root {
+    --primary-bg-color: #8F0000;
+    --primary-dark-bg-color: #670000;
+    --primary-light-bg-color: #721717;
+    --secondary-dark-bg-color: #BC2626;
+    --secondary-light-bg-color: #BC4444;
+    --text-bg-color: #000000;
+}
+
+body {
+    padding-top: 50px;
+}
+
+textarea {
+    min-height: 52px;
+    resize: vertical;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: var(--secondary-dark-bg-color);
+    border-color: var(--secondary-dark-bg-color);
+    background-image: var(--secondary-dark-bg-color);
+    background-repeat: repeat-x;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: var(--secondary-light-bg-color);
+    border-color: var(--secondary-light-bg-color);
+}
+
+.btn-primary:focus {
+    background-color: var(--secondary-dark-bg-color);
+    border-color: var(--secondary-dark-bg-color);
+    outline: none;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-position: 0 -15px;
+}
+
+.btn-primary:active, .btn-primary.active {
+    background-color: var(--primary-dark-bg-color);
+    border-color: var(--primary-dark-bg-color);
+}
+
+.btn-primary:active:hover, .btn-primary.active:hover, .open>.dropdown-toggle.btn-primary:hover, .btn-primary:active:focus, .btn-primary.active:focus, .open>.dropdown-toggle.btn-primary:focus, .btn-primary:active.focus, .btn-primary.active.focus, .open>.dropdown-toggle.btn-primary.focus {
+    color: #fff;
+    background-color: var(--primary-dark-bg-color);
+    border-color: var(--primary-dark-bg-color);
+    outline: none;
 }

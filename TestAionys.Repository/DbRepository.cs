@@ -18,9 +18,11 @@ namespace TestAionys.Repository
         }
 
         private IBaseRepository<Visit, VisitDto> _visits;
-        public IBaseRepository<Visit, VisitDto> Visits => _visits ?? (_visits = new VisitRepository(DbTables.Visits, _connectionString));
+        public IBaseRepository<Visit, VisitDto> Visits
+            => _visits ?? (_visits = new VisitRepository(DbTables.Visits, _connectionString));
 
         private IClientRepository _clients;
-        public IClientRepository Clients => _clients ?? (_clients = new ClientRepository(DbTables.Clients, _connectionString));
+        public IClientRepository Clients
+            => _clients ?? (_clients = new ClientRepository(DbTables.Clients, _connectionString));
     }
 }

@@ -9,7 +9,7 @@ export class NavMenu extends Component {
 
   render() {
     return (
-      <Navbar inverse fixedTop fluid collapseOnSelect>
+      <Navbar fixedTop inverse fluid collapseOnSelect>
         <Navbar.Header>
           <Navbar.Brand>
             <Link to={'/'}>TestForAionys</Link>
@@ -18,19 +18,14 @@ export class NavMenu extends Component {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav>
-            <LinkContainer to={'/'} exact>
+            <LinkContainer to={'/clients'}>
               <NavItem>
-                <Glyphicon glyph='home' /> Home
+                <Glyphicon glyph='user' /> Клиенты
               </NavItem>
             </LinkContainer>
-            <LinkContainer to={'/counter'}>
+            <LinkContainer to={'/visits'}>
               <NavItem>
-                <Glyphicon glyph='education' /> Counter
-              </NavItem>
-            </LinkContainer>
-            <LinkContainer to={'/fetchdata'}>
-              <NavItem>
-                <Glyphicon glyph='th-list' /> Fetch data
+                <Glyphicon glyph='th-list' /> Визиты
               </NavItem>
             </LinkContainer>
           </Nav>

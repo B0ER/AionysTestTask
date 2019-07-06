@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Threading.Tasks;
 using Dapper;
+using Microsoft.Data.Sqlite;
 using TestAionys.Application.IRepositories;
 using TestAionys.Models.Database;
 
@@ -15,7 +15,7 @@ namespace TestAionys.Repository.Repositories
 
         public async Task<IEnumerable<Client>> GetAll()
         {
-            using (Connection = new SqlConnection(ConnectionString))
+            using (Connection = new SqliteConnection(ConnectionString))
             {
                 IEnumerable<Client> clients = await Connection.QueryAsync<Client>($"Select * from {TableName}");
                 return clients;
@@ -24,7 +24,7 @@ namespace TestAionys.Repository.Repositories
 
         public async Task<Client> FindById(string id)
         {
-            using (Connection = new SqlConnection(ConnectionString))
+            using (Connection = new SqliteConnection(ConnectionString))
             {
                 Client client = await Connection.QueryFirstOrDefaultAsync<Client>(
                     $"Select top(1) * from {TableName} where id=@id", new { id });
@@ -34,7 +34,7 @@ namespace TestAionys.Repository.Repositories
 
         public async Task Add(Client addEntity)
         {
-            using (Connection = new SqlConnection(ConnectionString))
+            using (Connection = new SqliteConnection(ConnectionString))
             {
                 await Connection.ExecuteAsync(
                     $"Insert into {TableName} (Id, CreatedAt, FirstName, LastName, Address, PhoneNumbers) " +
@@ -53,7 +53,7 @@ namespace TestAionys.Repository.Repositories
 
         public async Task Update(Client updateEntity)
         {
-            using (Connection = new SqlConnection(ConnectionString))
+            using (Connection = new SqliteConnection(ConnectionString))
             {
                 await Connection.ExecuteAsync(
                     $"Update {TableName} " +
@@ -74,7 +74,7 @@ namespace TestAionys.Repository.Repositories
 
         public async Task DeleteById(string id)
         {
-            using (Connection = new SqlConnection(ConnectionString))
+            using (Connection = new SqliteConnection(ConnectionString))
             {
                 await Connection.ExecuteAsync($"DELETE FROM {TableName} where Id = @id", new { id });
             }
@@ -82,7 +82,7 @@ namespace TestAionys.Repository.Repositories
 
         public async Task Delete(Client deletedEntity)
         {
-            using (Connection = new SqlConnection(ConnectionString))
+            using (Connection = new SqliteConnection(ConnectionString))
             {
                 await Connection.ExecuteAsync($"DELETE FROM {TableName} where Id = @Id", new { deletedEntity.Id });
             }
@@ -90,7 +90,7 @@ namespace TestAionys.Repository.Repositories
 
         public async Task<IEnumerable<Client>> FindByFirstName(string firstName)
         {
-            using (Connection = new SqlConnection(ConnectionString))
+            using (Connection = new SqliteConnection(ConnectionString))
             {
                 IEnumerable<Client> client = await Connection.QueryAsync<Client>(
                     $"Select * from {TableName} where FirstName=@firstName", new { firstName });
@@ -100,7 +100,7 @@ namespace TestAionys.Repository.Repositories
 
         public async Task<IEnumerable<Client>> FindByCity(string city)
         {
-            using (Connection = new SqlConnection(ConnectionString))
+            using (Connection = new SqliteConnection(ConnectionString))
             {
                 IEnumerable<Client> client = await Connection.QueryAsync<Client>(
                     $"Select * from {TableName} where City=@city", new { city });
