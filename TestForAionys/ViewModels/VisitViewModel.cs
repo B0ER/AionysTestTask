@@ -5,12 +5,13 @@ namespace TestForAionys.ViewModels
 {
     public class VisitViewModel
     {
+        public string Id { get; set; }
         public string TaskName { get; set; }
         public string Description { get; set; }
         public string ClientAddress { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
-
+        public string StartTime { get; set; }
+        public string EndTime { get; set; }
+    
         public string ClientFirstName { get; set; }
         public string ClientLastName { get; set; }
 
@@ -18,11 +19,12 @@ namespace TestForAionys.ViewModels
         {
             var newVisitView = new VisitViewModel
             {
+                Id = visitDto.Visit.Id,
                 TaskName = visitDto.Visit.TaskName,
                 Description = visitDto.Visit.Description,
                 ClientAddress = visitDto.Visit.ClientAddress,
-                StartTime = visitDto.Visit.StartTime,
-                EndTime = visitDto.Visit.EndTime,
+                StartTime = visitDto.Visit.StartTime.ToShortTimeString(),
+                EndTime = visitDto.Visit.EndTime.ToShortTimeString(),
 
                 ClientFirstName = visitDto.Client.FirstName,
                 ClientLastName = visitDto.Client.LastName,

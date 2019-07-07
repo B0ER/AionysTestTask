@@ -53,8 +53,8 @@ export class Visits extends Component {
             <th>Адрес</th>
             <th>Начало</th>
             <th>Конец</th>
-            <th>Имя клиента</th>
             <th>Фамилия клиента</th>
+            <th>Имя клиента</th>
           </tr>
         </thead>
         {Visits.renderDataTable(visits)}

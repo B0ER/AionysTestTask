@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Data.Sqlite;
@@ -26,9 +27,9 @@ namespace TestAionys.Repository.Repositories
         {
             using (Connection = new SqliteConnection(ConnectionString))
             {
-                Client client = await Connection.QueryFirstOrDefaultAsync<Client>(
-                    $"Select top(1) * from {TableName} where id=@id", new { id });
-                return client;
+                IEnumerable<Client> clients = await Connection.QueryAsync<Client>(
+                    $"Select * from {TableName} where id=@id limit 1", new { id });
+                return clients.FirstOrDefault();
             }
         }
 

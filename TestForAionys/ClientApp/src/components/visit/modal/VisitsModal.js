@@ -62,12 +62,12 @@ export class VisitsModal extends Component {
 
     if (fieldIsValid) {
       let newVisit = {
-        taskName: this.state.taskName,
-        description: this.state.description,
-        clientId: this.state.clientId,
-        clientAddress: this.state.clientAddress,
-        startTime: this.state.startTime,
-        endTime: this.state.endTime
+        TaskName: this.state.taskName,
+        Description: this.state.description,
+        ClientId: this.state.clientId,
+        ClientAddress: this.state.clientAddress,
+        StartTime: this.state.startTime,
+        EndTime: this.state.endTime
       };
 
 
@@ -99,8 +99,8 @@ export class VisitsModal extends Component {
       description: "",
       clientId: "",
       clientAddress: "",
-      startTime: "",
-      endTime: ""
+      startTime: 25200,
+      endTime: 79200
     });
     this.appModal.closeModal();
   }

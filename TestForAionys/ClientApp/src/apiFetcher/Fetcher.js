@@ -24,8 +24,11 @@ export class Fetcher {
   async insert(prefix, data) {
     if (this.checkPrefix(prefix)) {
       let response = await fetch(`api/${prefix}/`, {
-        method: 'post',
-        body: data
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
       });
       let result = response.json();
       return result;

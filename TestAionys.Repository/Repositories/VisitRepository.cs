@@ -36,9 +36,10 @@ namespace TestAionys.Repository.Repositories
             using (Connection = new SqliteConnection(ConnectionString))
             {
                 IEnumerable<VisitDto> visitsDto = await Connection.QueryAsync<Visit, Client, VisitDto>(
-                    $"Select top(1) * from {TableName} " +
+                    $"Select * from {TableName} " +
                     $"inner join {DbTables.Clients} on {DbTables.Clients}.Id={TableName}.ClientId " +
-                    $"where {TableName}.Id=@id",
+                    $"where {TableName}.Id=@id " +
+                    $"limit 1",
                     (visit, client) =>
                     {
                         var visitDto = new VisitDto { Client = client, Visit = visit };
@@ -54,7 +55,7 @@ namespace TestAionys.Repository.Repositories
             {
                 await Connection.ExecuteAsync(
                     $"Insert into {TableName} (Id, CreatedAt, ClientId, TaskName, Description, ClientAddress, StartTime, EndTime) " +
-                    $"Values (@Id, @CreatedAt, @ClientId, @TaskName, @Description, @ClientAddress, StartTime, EndTime)",
+                    $"Values (@Id, @CreatedAt, @ClientId, @TaskName, @Description, @ClientAddress, @StartTime, @EndTime)",
                     new
                     {
                         addEntity.Id,
