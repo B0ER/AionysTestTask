@@ -29,7 +29,7 @@ export class Clients extends Component {
         <tbody>
           {clients.map(client =>
             <tr key={client.id}>
-              <td>{client.firsName}</td>
+              <td>{client.firstName}</td>
               <td>{client.lastName}</td>
               <td>{client.address}</td>
               <td>{client.phoneNumbers}</td>
@@ -41,7 +41,6 @@ export class Clients extends Component {
   }
 
   render() {
-    !this.state.loading ? console.log(this.state.clients) : null;
     let contents = this.state.loading
       ? <p><em>Загрузка...</em></p>
       : Clients.renderClientsTable(this.state.clients);

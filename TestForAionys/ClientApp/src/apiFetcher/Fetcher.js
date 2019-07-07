@@ -20,4 +20,15 @@ export class Fetcher {
       return result;
     }
   }
+
+  async insert(prefix, data) {
+    if (this.checkPrefix(prefix)) {
+      let response = await fetch(`api/${prefix}/`, {
+        method: 'post',
+        body: data
+      });
+      let result = response.json();
+      return result;
+    }
+  }
 }

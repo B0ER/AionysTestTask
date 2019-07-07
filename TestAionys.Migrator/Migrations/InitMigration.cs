@@ -12,7 +12,7 @@ namespace TestAionys.Migrator.Migrations
             Create.Table("Clients")
                 .WithColumn(nameof(Client.Id)).AsString(36).PrimaryKey()
                 .WithColumn(nameof(Client.CreatedAt)).AsDateTime()
-                .WithColumn(nameof(Client.FirsName)).AsString()
+                .WithColumn(nameof(Client.FirstName)).AsString()
                 .WithColumn(nameof(Client.LastName)).AsString()
                 .WithColumn(nameof(Client.Address)).AsString()
                 .WithColumn(nameof(Client.PhoneNumbers)).AsString(13);

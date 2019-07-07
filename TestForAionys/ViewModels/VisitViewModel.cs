@@ -24,7 +24,7 @@ namespace TestForAionys.ViewModels
                 StartTime = visitDto.Visit.StartTime,
                 EndTime = visitDto.Visit.EndTime,
 
-                ClientFirstName = visitDto.Client.FirsName,
+                ClientFirstName = visitDto.Client.FirstName,
                 ClientLastName = visitDto.Client.LastName,
             };
 

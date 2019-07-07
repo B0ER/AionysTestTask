@@ -43,7 +43,7 @@ namespace TestAionys.Repository.Repositories
                     {
                         addEntity.Id,
                         addEntity.CreatedAt,
-                        addEntity.FirsName,
+                        addEntity.FirstName,
                         addEntity.LastName,
                         addEntity.Address,
                         addEntity.PhoneNumbers
@@ -64,7 +64,7 @@ namespace TestAionys.Repository.Repositories
                     {
                         updateEntity.Id,
                         updateEntity.CreatedAt,
-                        updateEntity.FirsName,
+                        updateEntity.FirstName,
                         updateEntity.LastName,
                         updateEntity.Address,
                         updateEntity.PhoneNumbers

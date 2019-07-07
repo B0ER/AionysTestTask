@@ -4,12 +4,12 @@ import { Modal, Button } from 'react-bootstrap';
 export class AppModal extends Component {
   constructor(props, context) {
     super(props, context);
-    this.state = { modalIsShow: props.isShow };
+    this.state = { modalIsShow: false };
 
     this.showModal = this.showModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
-  
+
   componentDidMount() {
     this.props.onRef(this);
   }
@@ -35,7 +35,13 @@ export class AppModal extends Component {
           {this.props.children}
         </Modal.Body>
         <Modal.Footer>
-          <Button bsStyle="primary" onClick={this.closeModal}>Закрыть</Button>
+          {
+            this.props.submitAction &&
+            <Button bsStyle="primary" onClick={this.props.submitAction}>
+              {this.props.submitButtonText && this.props.submitButtonText}
+            </Button>
+          }
+          <Button bsStyle="primary" onClick={this.props.onCancelClick}>{this.props.cancelButtonText}</Button>
         </Modal.Footer>
       </Modal>
     );
