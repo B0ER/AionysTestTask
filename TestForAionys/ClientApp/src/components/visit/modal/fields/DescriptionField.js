@@ -15,7 +15,7 @@ export function DescriptionField({ value, onChange, ...props }) {
       label="Описание"
       validation={validateDescription(value)}
 
-      type="textarea"
+      componentClass="textarea"
       value={value}
       placeholder="Введите описание"
       onChange={onChange}

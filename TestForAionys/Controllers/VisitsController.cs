@@ -30,6 +30,8 @@ namespace TestForAionys.Controllers
         [HttpPost]
         public async Task<ActionResult<VisitViewModel>> AddVisit([FromBody]VisitInputModel newVisit)
         {
+            if (!ModelState.IsValid) return BadRequest();
+
             var visit = newVisit.ToVisit();
             var client = await _db.Clients.FindById(visit.ClientId);
 
@@ -50,6 +52,41 @@ namespace TestForAionys.Controllers
             };
 
             return visitViewModel;
+        }
+
+        [HttpDelete("{idVisit}")]
+        public async Task<IActionResult> DeleteVisit([FromRoute] string idVisit)
+        {
+            await _db.Visits.DeleteById(idVisit);
+            return Ok();
+        }
+
+        [HttpPost("{id}/update")]
+        public async Task<ActionResult<VisitViewModel>> UpdateVisit([FromRoute]string id, [FromBody]VisitInputModel updateVisit)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+
+            var visit = updateVisit.ToVisit();
+            var client = await _db.Clients.FindById(visit.ClientId);
+
+            if (client == null) return BadRequest();
+
+            await _db.Visits.Update(visit);
+
+            var visitViewModel = new VisitViewModel
+            {
+                Id = visit.Id,
+                TaskName = visit.TaskName,
+                ClientAddress = visit.ClientAddress,
+                ClientFirstName = client.FirstName,
+                ClientLastName = client.LastName,
+                Description = visit.Description,
+                StartTime = visit.StartTime.ToShortTimeString(),
+                EndTime = visit.EndTime.ToShortTimeString()
+            };
+
+            return visitViewModel;
+
         }
     }
 }

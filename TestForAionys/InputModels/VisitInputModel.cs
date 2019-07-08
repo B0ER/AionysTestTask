@@ -6,6 +6,8 @@ namespace TestForAionys.InputModels
 {
     public class VisitInputModel
     {
+        public string Id { get; set; }
+
         [Required]
         public string TaskName { get; set; }
         [Required]
@@ -30,6 +32,8 @@ namespace TestForAionys.InputModels
                 StartTime = new DateTime(TimeSpan.FromSeconds(StartTime).Ticks),
                 EndTime = new DateTime(TimeSpan.FromSeconds(EndTime).Ticks)
             };
+            if (Id != null)
+                visit.Id = Id;
             return visit;
         }
     }

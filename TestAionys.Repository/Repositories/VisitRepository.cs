@@ -76,13 +76,12 @@ namespace TestAionys.Repository.Repositories
             {
                 await Connection.ExecuteAsync(
                     $"Update {TableName} " +
-                    $"SET CreatedAt=@CreatedAt, ClientId=@ClientId, TaskName=@TaskName, " +
+                    $"SET ClientId=@ClientId, TaskName=@TaskName, " +
                     $"Description=@Description, ClientAddress=@ClientAddress, StartTime=@StartTime, EndTime=@EndTime " +
-                    $"where Id = @id",
+                    $"where Id = @Id",
                     new
                     {
                         updateEntity.Id,
-                        updateEntity.CreatedAt,
                         updateEntity.ClientId,
                         updateEntity.TaskName,
                         updateEntity.Description,

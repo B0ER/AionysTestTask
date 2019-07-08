@@ -10,7 +10,6 @@ export class VisitsModal extends Component {
   constructor(props, context) {
     super(props, context);
     this.validationField = this.validationField.bind(this);
-    this.addVisit = this.addVisit.bind(this);
 
     this.fetcher = new Fetcher();
 
@@ -22,34 +21,34 @@ export class VisitsModal extends Component {
       startTime: 25200,
       endTime: 79200,
 
-      clients: []
+      clients: [],
+      submitTextButton: "Добавить"
     };
 
     this.fetcher.getAll('clients')
       .then(clients => this.setState({ clients }));
   }
 
-
-  validationField() {
-    let nameIsValid = Fields.validateName(this.state.taskName);
+  validationField({ taskName, description, clientId, clientAddress }) {
+    let nameIsValid = Fields.validateName(taskName);
     if ("error" === nameIsValid || null === nameIsValid) {
       toast("Введите корректное имя", { type: toast.TYPE.ERROR, autoClose: 5000 });
       return false;
     }
 
-    let descriptionIsValid = Fields.validateDescription(this.state.description)
+    let descriptionIsValid = Fields.validateDescription(description)
     if ("error" === descriptionIsValid || null === descriptionIsValid) {
       toast("Введите корректное описание", { type: toast.TYPE.ERROR, autoClose: 5000 });
       return false;
     }
 
-    let clientIdIsValid = Fields.validateClientId(this.state.clientId);
+    let clientIdIsValid = Fields.validateClientId(clientId);
     if ("error" === clientIdIsValid || null === clientIdIsValid) {
       toast("Выберите клиента", { type: toast.TYPE.ERROR, autoClose: 5000 });
       return false;
     }
 
-    let addressIsValid = Fields.validateAddress(this.state.clientAddress);
+    let addressIsValid = Fields.validateAddress(clientAddress);
     if ("error" === addressIsValid || null === addressIsValid) {
       toast("Введите корректный адрес", { type: toast.TYPE.ERROR, autoClose: 5000 });
       return false;
@@ -57,11 +56,57 @@ export class VisitsModal extends Component {
     return true;
   }
 
-  addVisit = () => {
-    let fieldIsValid = this.validationField();
+  showModal(action) {
+    switch (action) {
+      case 'update':
+        this.setState({ submitTextButton: 'Обновить' });
+        this.apiAction = (updateVisit) => {
+          this.fetcher.update('visits', updateVisit.Id, updateVisit)
+            .then((requestVisit) => {
+              this.props.updateTable();
+            });
+        };
+        break;
+
+      case 'insert':
+        this.setState({ submitTextButton: 'Добавить' });
+        this.apiAction = (newVisit) => {
+          this.fetcher.insert('visits', newVisit)
+            .then((requestVisit) => {
+              this.props.updateTable(requestVisit);
+            });
+        };
+        break;
+
+      default:
+        throw new Error();
+    }
+    this.appModal.showModal();
+  }
+
+  timeConvertToSec(hm) {
+    var a = hm.split(':');
+    return (+a[0]) * 3600 + (+a[1]);
+  }
+
+  setModalData = (visit) => {
+    this.setState({
+      id: visit.id,
+      taskName: visit.taskName,
+      description: visit.description,
+      clientId: visit.clientId,
+      clientAddress: visit.clientAddress,
+      startTime: this.timeConvertToSec(visit.startTime),
+      endTime: this.timeConvertToSec(visit.endTime)
+    });
+  }
+
+  submitAction = () => {
+    let fieldIsValid = this.validationField(this.state);
 
     if (fieldIsValid) {
       let newVisit = {
+        Id: this.state.id,
         TaskName: this.state.taskName,
         Description: this.state.description,
         ClientId: this.state.clientId,
@@ -70,30 +115,13 @@ export class VisitsModal extends Component {
         EndTime: this.state.endTime
       };
 
-
-      this.fetcher.insert('visits', newVisit)
-        .then((requestVisit) => {
-          this.props.addToTable(requestVisit);
-        });
-
-      /*
-      let requestVisit = {
-        id: "abc",
-        taskName: "Имя",
-        description: "Фамилия",
-        clientAddress: "Фамилия",
-        startTime: "08:00",
-        endTime: "22:00",
-        clientFirstName: "Сидор",
-        clientLastName: "Петр",
-      }
-      this.props.addToTable(requestVisit);
-      */
+      this.apiAction(newVisit);
       this.closeModal();
     }
   }
 
   closeModal = () => {
+    this.appModal.closeModal();
     this.setState({
       taskName: "",
       description: "",
@@ -102,19 +130,18 @@ export class VisitsModal extends Component {
       startTime: 25200,
       endTime: 79200
     });
-    this.appModal.closeModal();
   }
 
   render() {
     return (
       <div>
         <AppModal
-          onRef={ref => { this.appModal = ref; this.props.onRef(ref); }}
+          onRef={refModal => { this.appModal = refModal; this.props.onRef(this); }}
           HeadText="Добавить"
-          submitAction={this.addVisit}
-          submitButtonText="Добавить"
+          submitButtonText={this.state.submitTextButton}
           cancelButtonText="Закрыть"
           onCancelClick={() => this.closeModal()}
+          onSubmitClick={this.submitAction}
         >
           <form>
             <Fields.NameField

@@ -34,4 +34,28 @@ export class Fetcher {
       return result;
     }
   }
+
+  async delete(prefix, id) {
+    if (this.checkPrefix(prefix)) {
+      await fetch(`api/${prefix}/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+    }
+  }
+
+  async update(prefix, id, data) {
+    if (this.checkPrefix(prefix)) {
+      await fetch(`api/${prefix}/${id}/update`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+    }
+  }
 }

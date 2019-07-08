@@ -36,8 +36,8 @@ export class AppModal extends Component {
         </Modal.Body>
         <Modal.Footer>
           {
-            this.props.submitAction &&
-            <Button bsStyle="primary" onClick={this.props.submitAction}>
+            this.props.onSubmitClick &&
+            <Button bsStyle="primary" onClick={this.props.onSubmitClick}>
               {this.props.submitButtonText && this.props.submitButtonText}
             </Button>
           }

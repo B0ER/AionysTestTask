@@ -12,6 +12,7 @@ namespace TestForAionys.ViewModels
         public string StartTime { get; set; }
         public string EndTime { get; set; }
     
+        public string ClientId { get; set; }
         public string ClientFirstName { get; set; }
         public string ClientLastName { get; set; }
 
@@ -26,6 +27,7 @@ namespace TestForAionys.ViewModels
                 StartTime = visitDto.Visit.StartTime.ToShortTimeString(),
                 EndTime = visitDto.Visit.EndTime.ToShortTimeString(),
 
+                ClientId = visitDto.Client.Id,
                 ClientFirstName = visitDto.Client.FirstName,
                 ClientLastName = visitDto.Client.LastName,
             };
