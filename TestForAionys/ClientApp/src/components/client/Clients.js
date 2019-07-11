@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Fetcher } from '../../apiFetcher/Fetcher';
+import { ClientsDropDown } from './ClientsDropDown';
+import { ButtonToolbar } from 'react-bootstrap';
 
 export class Clients extends Component {
   displayName = Clients.name
@@ -15,7 +17,7 @@ export class Clients extends Component {
       });
   }
 
-  static renderClientsTable(clients) {
+  renderClientsTable(clients) {
     return (
       <table className='table'>
         <thead>
@@ -40,15 +42,35 @@ export class Clients extends Component {
     );
   }
 
-  render() {
-    let contents = this.state.loading
-      ? <p><em>Загрузка...</em></p>
-      : Clients.renderClientsTable(this.state.clients);
+  renderDropDown(clientsArr) {
+    return (
+      <ButtonToolbar>
+        <ClientsDropDown
+          title="Город"
+          dataSelector="address"
+          downloadMenuItems={this.fetcher.getAllCity}
+          updateData={(clients) => this.setState({ clients })}
+          data={clientsArr}
+        />
+        <ClientsDropDown
+          title="Фамилия"
+          dataSelector="firstName"
+          downloadMenuItems={this.fetcher.getAllFirstName}
+          updateData={(clients) => this.setState({ clients })}
+          data={clientsArr}
+        />
+      </ButtonToolbar>
+    );
+  }
 
+  render() {
     return (
       <div>
         <h3>Клиенты</h3>
-        {contents}
+
+        {!this.state.loading && this.renderDropDown(this.state.clients)}
+        {!this.state.loading && this.renderClientsTable(this.state.clients)}
+
       </div>
     );
   }

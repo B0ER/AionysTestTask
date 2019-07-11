@@ -22,5 +22,19 @@ namespace TestForAionys.Controllers
             IEnumerable<Client> clients = await _db.Clients.GetAll();
             return clients;
         }
+
+        [HttpGet("cities")]
+        public async Task<IActionResult> GetAllCities()
+        {
+            IEnumerable<string> cities = await _db.Clients.GetAllCities();
+            return Ok(cities);
+        }
+
+        [HttpGet("firstnames")]
+        public async Task<IActionResult> GetAllFirstnames()
+        {
+            IEnumerable<string> firstNames = await _db.Clients.GetAllFirstNames();
+            return Ok(firstNames);
+        }
     }
 }

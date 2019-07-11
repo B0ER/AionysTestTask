@@ -51,3 +51,10 @@ textarea {
     border-color: var(--primary-dark-bg-color);
     outline: none;
 }
+
+.btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+    color: #fff;
+    background-color: var(--primary-dark-bg-color);
+    background-image: none;
+    border-color: var(--primary-dark-bg-color);
+}

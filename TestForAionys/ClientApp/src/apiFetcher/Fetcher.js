@@ -58,4 +58,28 @@ export class Fetcher {
 
     }
   }
+
+  async getAllCity() {
+    let response = await fetch(`api/clients/cities`, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    let cities = await response.json();
+    return cities;
+  }
+
+  async getAllFirstName() {
+    let response = await fetch(`api/clients/firstnames`, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    let firstnames = await response.json();
+    return firstnames;
+  }
 }

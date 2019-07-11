@@ -89,23 +89,23 @@ namespace TestAionys.Repository.Repositories
             }
         }
 
-        public async Task<IEnumerable<Client>> FindByFirstName(string firstName)
+        public async Task<IEnumerable<string>> GetAllCities()
         {
             using (Connection = new SqliteConnection(ConnectionString))
             {
-                IEnumerable<Client> client = await Connection.QueryAsync<Client>(
-                    $"Select * from {TableName} where FirstName=@firstName", new { firstName });
-                return client;
+                var cities = await Connection.QueryAsync<string>(
+                    $"SELECT DISTINCT Address FROM {TableName}");
+                return cities;
             }
         }
 
-        public async Task<IEnumerable<Client>> FindByCity(string city)
+        public async Task<IEnumerable<string>> GetAllFirstNames()
         {
             using (Connection = new SqliteConnection(ConnectionString))
             {
-                IEnumerable<Client> client = await Connection.QueryAsync<Client>(
-                    $"Select * from {TableName} where City=@city", new { city });
-                return client;
+                var cities = await Connection.QueryAsync<string>(
+                    $"SELECT DISTINCT FirstName FROM {TableName}");
+                return cities;
             }
         }
     }
